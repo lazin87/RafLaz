@@ -1,0 +1,45 @@
+{% set name = "RafLaz" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: ..
+  ignore_patterns:
+    - build/*
+    - conda/build/*
+
+build:
+  number: 0
+  string: py{{ CONDA_PY }}
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake >=3.10
+    - ninja  # [win]
+    - make   # [not win]
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  imports:
+    - raflaz
+  source_files:
+    - python/test.py
+  commands:
+    - python python/test.py
+
+about:
+  home: https://github.com/lazin87/RafLaz
+  license: MIT
+  summary: 'Hello World style library.'
+  description: |
+    A cross-platform library that provides the Foo() function,
+    which return constant value, and it is accessible both
+    from C++ and Python.

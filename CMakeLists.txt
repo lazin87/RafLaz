@@ -51,6 +51,14 @@ install(TARGETS RafLazLib
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-install(TARGETS pyRafLaz
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
+if(DEFINED ENV{CONDA_BUILD})
+    # Install the Python module to the correct location for Conda
+    install(TARGETS pyRafLaz
+            LIBRARY DESTINATION ${Python3_SITEARCH}
+    )
+else()
+    # Normal installation
+    install(TARGETS pyRafLaz
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+endif()
